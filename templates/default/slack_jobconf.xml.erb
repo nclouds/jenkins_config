@@ -1,0 +1,18 @@
+<jenkins.plugins.slack.SlackNotifier>
+  <teamDomain><%= @notifier['domain']%></teamDomain>
+  <authToken><%= @notifier['auth_token']%></authToken>
+  <buildServerUrl></buildServerUrl>
+  <room><%= @notifier['channel']%></room>
+  <startNotification><%= if @notifier['notify_on'].include?('start') then "true" else "false" end %></startNotification>
+  <notifySuccess><%= if @notifier['notify_on'].include?('success') then "true" else "false" end %></notifySuccess>
+  <notifyAborted><%= if @notifier['notify_on'].include?('aborted') then "true" else "false" end %></notifyAborted>
+  <notifyNotBuilt><%= if @notifier['notify_on'].include?('not_built') then "true" else "false" end %></notifyNotBuilt>
+  <notifyUnstable><%= if @notifier['notify_on'].include?('unstable') then "true" else "false" end %></notifyUnstable>
+  <notifyFailure><%= if @notifier['notify_on'].include?('failure') then "true" else "false" end %></notifyFailure>
+  <notifyBackToNormal><%= if @notifier['notify_on'].include?('back_to_normal')  then "true" else "false" end %></notifyBackToNormal>
+  <notifyRepeatedFailure><%= if @notifier['notify_on'].include?('repeated_failure')  then "true" else "false" end %></notifyRepeatedFailure>
+  <includeTestSummary>false</includeTestSummary>
+  <commitInfoChoice>NONE</commitInfoChoice>
+  <includeCustomMessage><%= if @notifier['custom_message'] == nil then "false" else "true" end %></includeCustomMessage>
+  <customMessage><%= @notifier['custom_message']%></customMessage>
+</jenkins.plugins.slack.SlackNotifier>

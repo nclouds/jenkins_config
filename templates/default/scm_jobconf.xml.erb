@@ -1,0 +1,48 @@
+<scm class="org.jenkinsci.plugins.multiplescms.MultiSCM" plugin="multiple-scms@0.6">
+  <scms>
+
+<% @scms.each do |scm| %>
+  <% if scm['type'] == 'git' %>
+    <%
+      if scm['branch'] == 'nil'
+        scm['branch'] == '*/master'
+      end
+    %>
+
+    <hudson.plugins.git.GitSCM plugin="git@2.5.3">
+      <configVersion>2</configVersion>
+      <userRemoteConfigs>
+        <hudson.plugins.git.UserRemoteConfig>
+          <url><%= scm['url']%></url>
+          <credentialsId><%= scm['credentials_id'] %></credentialsId>
+        </hudson.plugins.git.UserRemoteConfig>
+      </userRemoteConfigs>
+      <branches>
+        <hudson.plugins.git.BranchSpec>
+          <name><%= scm['branch']%></name>
+        </hudson.plugins.git.BranchSpec>
+      </branches>
+      <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+      <submoduleCfg class="list"/>
+
+    <% if scm['checkout_folder'] == nil %>
+
+      <extensions/>
+
+    <% else %>
+
+      <extensions>
+        <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+          <relativeTargetDir><%= scm['checkout_folder'] %></relativeTargetDir>
+        </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+      </extensions>
+
+    <% end %>
+
+    </hudson.plugins.git.GitSCM>
+
+  <% end %>
+<% end %>
+
+  </scms>
+</scm>

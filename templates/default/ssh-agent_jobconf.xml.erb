@@ -1,0 +1,18 @@
+<% unless @ssh_agent.empty? || @ssh_agent['credential_ids'].empty? %>
+
+  <% @ssh_agent['ignore_missing'] = false if @ssh_agent['ignore_missing'].nil? %>
+
+<com.cloudbees.jenkins.plugins.sshagent.SSHAgentBuildWrapper plugin="ssh-agent@1.13">
+  <credentialIds>
+
+  <% @ssh_agent['credential_ids'].each do |c| %>
+
+    <string><%= c %></string>
+
+  <% end %>
+
+  </credentialIds>
+  <ignoreMissing><%= @ssh_agent['ignore_missing'] %></ignoreMissing>
+</com.cloudbees.jenkins.plugins.sshagent.SSHAgentBuildWrapper>
+
+<% end %>

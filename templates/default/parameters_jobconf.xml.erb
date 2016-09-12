@@ -1,0 +1,30 @@
+<properties>
+
+<% unless @parameters.empty? %>
+  <hudson.model.ParametersDefinitionProperty>
+    <parameterDefinitions>
+
+  <% @parameters.each do |parameter| %>
+    <% case parameter['type'] %>
+    <% when 'boolean', 'bool' %>
+      <hudson.model.BooleanParameterDefinition>
+        <name><%= parameter['name'] %></name>
+        <description><%= parameter['description'] %></description>
+        <defaultValue><%= parameter['default_value'] %></defaultValue>
+      </hudson.model.BooleanParameterDefinition>
+
+    <% when 'string' %>
+      <hudson.model.StringParameterDefinition>
+        <name><%= parameter['name'] %></name>
+        <description><%= parameter['description'] %></description>
+        <defaultValue><%= parameter['default_value'] %></defaultValue>
+      </hudson.model.StringParameterDefinition>
+
+    <% end %>
+  <% end %>
+
+    </parameterDefinitions>
+  </hudson.model.ParametersDefinitionProperty>
+
+<% end %>
+</properties>

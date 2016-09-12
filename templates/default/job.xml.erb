@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+
+  <%= render 'parameters_jobconf.xml.erb', :cookbook => 'jenkins_config', :variables => { parameters: @job_parameters } %>
+
+  <% unless @auth_token.nil? || @auth_token == '' %>
+
+  <authToken><%= @auth_token %></authToken>
+
+  <% end %>
+
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+
+<% if @scms.any? %>
+  <%= render 'scm_jobconf.xml.erb', :cookbook => 'jenkins_config' %>
+<% end %>
+
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <% for build_step in @build_steps %>
+      <% if build_step['builder'] == 'shell' %>
+        <hudson.tasks.Shell>
+          <command><%= render build_step['command_erb'] %></command>
+        </hudson.tasks.Shell>
+      <% end %>
+    <% end %>
+  </builders>
+  <publishers>
+    <% for notifier in @notifiers %>
+      <% if notifier['type'] == 'slack' %>
+        <%= render 'slack_jobconf.xml.erb', :cookbook => 'jenkins_config', :variables => { notifier: notifier } %>
+      <% end %>
+    <% end %>
+  </publishers>
+  <buildWrappers>
+    <%= render 'ssh-agent_jobconf.xml.erb', :cookbook => 'jenkins_config' %>
+    <%= render 'credentials-binding_jobconf.xml.erb', :cookbook => 'jenkins_config' %>
+  </buildWrappers>
+</project>
