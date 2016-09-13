@@ -4,7 +4,11 @@ maintainer_email 'ananda.manoharan@nclouds.com'
 license 'all_rights'
 description 'Installs/Configures jenkins_config'
 long_description 'Installs/Configures jenkins_config'
-version '1.0.0'
+version '1.0.1'
 
 depends 'jenkins', '~> 2.5.0'
 depends 'java', '~> 1.39.0'
+
+
+source_url 'https://github.com/nclouds/jenkins_config.git'
+issues_url 'https://github.com/nclouds/jenkins_config/issues'
