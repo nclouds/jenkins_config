@@ -35,6 +35,8 @@
     <% for notifier in @notifiers %>
       <% if notifier['type'] == 'slack' %>
         <%= render 'slack_jobconf.xml.erb', :cookbook => 'jenkins_config', :variables => { notifier: notifier } %>
+      <% elsif notifier['type'] == 'hipchat' %>
+        <%= render 'hipchat_jobconf.xml.erb', :cookbook => 'jenkins_config', :variables => { notifier: notifier } %>
       <% end %>
     <% end %>
   </publishers>
