@@ -1,0 +1,21 @@
+<jenkins.plugins.hipchat.HipChatNotifier plugin="hipchat@1.0.0">
+  <token><%= @notifier['auth_token']%></token>
+  <room><%= @notifier['channel']%></room>
+  <notifications>
+
+<% @notifier['configs'].each do |n| %>
+
+    <jenkins.plugins.hipchat.model.NotificationConfig>
+      <notifyEnabled>true</notifyEnabled>
+      <textFormat>true</textFormat>
+      <notificationType><%= n['type'] %></notificationType>
+      <color><%= n['color'] %></color>
+      <messageTemplate><%= n['message_template'] %></messageTemplate>
+    </jenkins.plugins.hipchat.model.NotificationConfig>
+
+<% end %>
+
+  </notifications>
+  <startJobMessage></startJobMessage>
+  <completeJobMessage></completeJobMessage>
+</jenkins.plugins.hipchat.HipChatNotifier>

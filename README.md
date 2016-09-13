@@ -212,9 +212,33 @@ jenkins_config_job 'job1' do
   ]
 ```
 
+__Hipchat Notifications__<BR>
 
+The hipchat notifications that are supported hipchat plugin can be specified.
 
-
+```ruby
+jenkins_config_job 'job1' do
+  notifiers [
+    {
+      'type' => 'hipchat',
+      'channel' => node['nclouds_jenkins']['hipchat']['channel'],
+      'auth_token' => node['nclouds_jenkins']['hipchat']['auth_token'],
+      'configs' => [
+        {
+          'type' => 'STARTED', # Notification time
+          'color' => 'GREEN',
+          'message_template' => '$JOB_NAME $BUILD_NUMBER started'
+        },
+        {
+          'type' => 'SUCCESS',
+          'color' => 'GREEN',
+          'message_template' => '$JOB_NAME successfully completed'
+        }
+      ]
+    }
+  ]
+end
+```
 
 ### jenkins_config_plugin
 
